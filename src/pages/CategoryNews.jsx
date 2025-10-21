@@ -1,7 +1,10 @@
 import React from "react";
+import { useParams } from "react-router";
 
 const CategoryNews = () => {
-  return <div></div>;
+  const { id } = useParams();
+  console.log(id);
+  return <div>CategoryNews</div>;
 };
 
 export default CategoryNews;
