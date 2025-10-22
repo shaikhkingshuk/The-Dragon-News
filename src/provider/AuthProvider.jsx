@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 
 export const AuthContext = createContext();
@@ -20,6 +21,10 @@ const AuthProvider = ({ children }) => {
   /// along with 'email & password'-which they get from the register page
   /// and to get register data, we send above function with the context
 
+  const logOut = () => {
+    return signOut(auth);
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -33,6 +38,7 @@ const AuthProvider = ({ children }) => {
     user,
     setUser,
     createUser,
+    logOut,
   };
   return <AuthContext value={authData}>{children}</AuthContext>;
 };
