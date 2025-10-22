@@ -1,15 +1,25 @@
 import React, { createContext, useState } from "react";
+import app from "../firebase/firebase.config";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 
 export const AuthContext = createContext();
 
+const auth = getAuth(app);
+
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    name: "hablu mia",
-    email: "hablue@gmail.com",
-  });
+  const [user, setUser] = useState(null);
+
+  const createUser = (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+  /// this function is mainly created to attach "auth" in "createUserWithEmailAndPassword"-function
+  /// along with 'email & password'-which they get from the register page
+  /// and to get register data, we send above function with the context
+
   const authData = {
     user,
     setUser,
+    createUser,
   };
   return <AuthContext value={authData}>{children}</AuthContext>;
 };
